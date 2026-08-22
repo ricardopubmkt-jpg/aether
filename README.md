@@ -40,13 +40,6 @@ AETHER_DEMO_MODE=true
 
 `prefers-reduced-motion` ignora o ritual temporizado.
 
-## Baixar ZIP
-
-No GitHub: botão verde **Code** → **Download ZIP**.
-
-Link direto:
-https://github.com/ricardopubmkt-jpg/aether/archive/refs/heads/main.zip
-
 ## Teste
 
 Abra. Não toque em nada por 30 segundos. Depois escreva. Depois saia e volte.
