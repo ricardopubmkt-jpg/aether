@@ -1,47 +1,36 @@
-# Aether v0.6.1 — THE ORGANISM
+# Aether v0.7 — THRESHOLD
 
-Um campo coletivo vivo. Presença, respiração, eco e pulso.
+Um limiar coletivo vivo. Não é um feed. Não é um app de IA.
+É um organismo que continua respirando quando você sai.
 
-Nenhuma funcionalidade nova em relação à v0.6. Só o corpo passando a obedecer ao cérebro.
+## O lugar (sem instalar)
 
-## Rodar
+Abra [`place/README.md`](place/README.md). O organismo completo é um único `index.html`.
+
+## O backend (Convex)
 
 ```bash
 npm install
 npx convex dev
-```
-
-Em outro terminal:
-
-```bash
 npm run dev
 ```
 
-Copie `.env.example` para `.env.local` e use a URL do Convex.
+`AETHER_DEMO_MODE=true` no primeiro teste.
 
-Para o primeiro teste, mantenha:
+## O que mudou no v0.7
 
-```
-AETHER_DEMO_MODE=true
-```
+- **Abordagem** — escrever comprime o campo antes de enviar
+- **Dissolução** — o texto vira matéria e é absorvido
+- **Estratos** — no silêncio, a memória do campo atravessa como pressão
+- **Retorno** — a ausência é contada em respirações do organismo
 
-## Fisiologia
+## O que permanece (v0.6.1)
 
-- A respiração pertence ao World State (`physiology.bornAt`). Não vive no `localStorage`.
-- Dois visitantes com o mesmo relógio observam a mesma respiração.
-- O centro não é desenhado. O vazio aparece porque as partículas recusam aquele espaço.
-- Uma contribuição não desenha um anel. Comprime o campo, aplica um impulso, e o organismo se recupera.
-- Quando a era muda, o corpo muda primeiro. O nome chega depois.
-
-## Ritual de entrada (intocado)
-
-1. ~0–1.4s — só o campo
-2. ~1.4s — era + presenças
-3. ~2.8s — narrativa
-4. ~4.6s — convite: “O que você traz?”
-
-`prefers-reduced-motion` ignora o ritual temporizado.
+- Respiração global (World State / relógio do campo)
+- Vazio não desenhado
+- Eco como física, não como anel
+- Ritual: campo → era → narrativa → convite
 
 ## Teste
 
-Abra. Não toque em nada por 30 segundos. O número da respiração sobe mesmo assim — e seria o mesmo em outro aparelho. Depois escreva: o campo comprime, depois se reconstitui. Não deve aparecer um círculo desenhado.
+Fique 30 segundos. Escreva. Saia. Volte.
