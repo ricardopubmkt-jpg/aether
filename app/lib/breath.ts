@@ -1,52 +1,38 @@
-const KEY = "aether-breath-v06";
-export const BREATH_MS = 8_000;
+const KEY = "aether-visit-v061";
+export const BREATH_MS = 7_200;
 
-type BreathState = {
-  count: number;
-  lastAt: number;
+type VisitState = {
   lastVisitAt: number;
 };
 
-function read(): BreathState {
+function read(): VisitState {
   const now = Date.now();
   try {
-    const raw = localStorage.getItem(KEY);
-    if (!raw) return { count: 1, lastAt: now, lastVisitAt: now };
-    return JSON.parse(raw) as BreathState;
+    const raw = window.localStorage.getItem(KEY);
+    if (!raw) return { lastVisitAt: now };
+    return JSON.parse(raw) as VisitState;
   } catch {
-    return { count: 1, lastAt: now, lastVisitAt: now };
+    return { lastVisitAt: Date.now() };
   }
 }
 
-function write(state: BreathState) {
-  localStorage.setItem(KEY, JSON.stringify(state));
+function write(state: VisitState) {
+  window.localStorage.setItem(KEY, JSON.stringify(state));
 }
 
-export function hydrateBreath(now = Date.now()) {
+/** Personal absence only. Breath itself belongs to World State. */
+export function hydrateVisit(now = Date.now()) {
   const state = read();
-  const elapsed = Math.max(0, now - (state.lastVisitAt || state.lastAt));
-  const extra = Math.floor(elapsed / BREATH_MS);
-  const next = {
-    count: state.count + extra,
-    lastAt: extra > 0 ? now : state.lastAt,
-    lastVisitAt: now,
-  };
-  write(next);
-  return { count: next.count, absenceBreaths: extra };
+  const elapsed = Math.max(0, now - (state.lastVisitAt || now));
+  const absenceBreaths = Math.floor(elapsed / BREATH_MS);
+  write({ lastVisitAt: now });
+  return { absenceBreaths };
 }
 
-export function tickBreath(now = Date.now()) {
-  const state = read();
-  const n = Math.floor((now - state.lastAt) / BREATH_MS);
-  if (n < 1) {
-    write({ ...state, lastVisitAt: now });
-    return state.count;
-  }
-  const next = {
-    count: state.count + n,
-    lastAt: state.lastAt + n * BREATH_MS,
-    lastVisitAt: now,
-  };
-  write(next);
-  return next.count;
+export function touchVisit(now = Date.now()) {
+  write({ lastVisitAt: now });
+}
+
+export function breathFromBorn(bornAt: number, now = Date.now()) {
+  return 1 + Math.max(0, Math.floor((now - bornAt) / BREATH_MS));
 }

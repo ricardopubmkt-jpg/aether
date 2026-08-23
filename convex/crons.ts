@@ -11,6 +11,13 @@ crons.interval(
 );
 
 crons.interval(
+  "aether metabolize",
+  { minutes: 1 },
+  internal.worldState.metabolize,
+  {}
+);
+
+crons.interval(
   "aether breathing pulse",
   { minutes: 1 },
   internal.pulse.runIfNeeded,

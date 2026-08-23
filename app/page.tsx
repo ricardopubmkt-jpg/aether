@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../convex/_generated/api";
 import AetherParticles from "./components/AetherParticles";
 import { ContributionInput } from "./components/ContributionInput";
-import { hydrateBreath, tickBreath } from "./lib/breath";
+import { breathFromBorn, hydrateVisit, touchVisit } from "./lib/breath";
 
 function getSessionId() {
   const key = "aether-session-id";
@@ -22,12 +22,22 @@ export default function Home() {
   const [localEcho, setLocalEcho] = useState(0);
   const [breath, setBreath] = useState(1);
   const [absent, setAbsent] = useState(false);
+  const [shownEra, setShownEra] = useState("Era do Despertar");
+  const [shownNarrative, setShownNarrative] = useState(
+    "O campo está vazio o bastante para ser ocupado. Ainda não pede nada."
+  );
+  const labeled = useRef(false);
+
+  const worldState = useQuery(api.worldState.getLatest, {});
+  const activeCount = useQuery(api.presence.getActiveCount, {});
+  const heartbeat = useMutation(api.presence.heartbeat);
+  const submit = useMutation(api.contributions.submit);
+  const initialize = useMutation(api.worldState.initializeWorld);
 
   useEffect(() => {
     setSessionId(getSessionId());
-    const hydrated = hydrateBreath();
-    setBreath(hydrated.count);
-    setAbsent(hydrated.absenceBreaths >= 2);
+    const visit = hydrateVisit();
+    setAbsent(visit.absenceBreaths >= 2);
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {
@@ -45,15 +55,16 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const id = window.setInterval(() => setBreath(tickBreath()), 1000);
+    const bornAt = worldState?.physiology?.bornAt;
+    if (!bornAt) return;
+    const tick = () => {
+      setBreath(breathFromBorn(bornAt));
+      touchVisit();
+    };
+    tick();
+    const id = window.setInterval(tick, 1000);
     return () => window.clearInterval(id);
-  }, []);
-
-  const activeCount = useQuery(api.presence.getActiveCount, {});
-  const worldState = useQuery(api.worldState.getLatest, {});
-  const heartbeat = useMutation(api.presence.heartbeat);
-  const submit = useMutation(api.contributions.submit);
-  const initialize = useMutation(api.worldState.initializeWorld);
+  }, [worldState?.physiology?.bornAt]);
 
   useEffect(() => {
     if (!sessionId) return;
@@ -67,6 +78,22 @@ export default function Home() {
     if (worldState === null) initialize().catch(() => {});
   }, [worldState, initialize]);
 
+  useEffect(() => {
+    if (!worldState) return;
+    if (!labeled.current) {
+      labeled.current = true;
+      setShownEra(worldState.eraName);
+      setShownNarrative(worldState.currentNarrative);
+      return;
+    }
+    const n = window.setTimeout(() => setShownNarrative(worldState.currentNarrative), 1400);
+    const e = window.setTimeout(() => setShownEra(worldState.eraName), 3000);
+    return () => {
+      window.clearTimeout(n);
+      window.clearTimeout(e);
+    };
+  }, [worldState?.version, worldState?.eraName, worldState?.currentNarrative]);
+
   const climate = useMemo(
     () =>
       worldState?.emotionalClimate ?? {
@@ -74,9 +101,9 @@ export default function Home() {
         density: 5.4,
         novelty: 0.38,
         flow: 0.34,
-        dominantTone: "void" as const,
+        dominantTone: "void" as const
       },
-    [worldState],
+    [worldState]
   );
 
   async function contribute(text: string) {
@@ -107,6 +134,7 @@ export default function Home() {
         tone={climate.dominantTone}
         echoToken={localEcho}
         version={worldState?.version ?? 0}
+        bornAt={worldState?.physiology?.bornAt}
       />
 
       <div className="relative z-10 flex min-h-screen flex-col px-6 py-8">
@@ -133,7 +161,7 @@ export default function Home() {
               showMeta ? "opacity-100" : "opacity-0"
             }`}
           >
-            {worldState?.eraName ?? "O campo desperta"}
+            {shownEra}
             <span className="text-white/25"> · respiração {breath}</span>
           </p>
 
@@ -145,8 +173,7 @@ export default function Home() {
                   : "translate-y-4 opacity-0 blur-[6px]"
               }`}
             >
-              {worldState?.currentNarrative ??
-                "O campo está vazio o bastante para ser ocupado. Ainda não pede nada."}
+              {shownNarrative}
             </p>
             {absent && showNarrative ? (
               <p className="mt-6 text-[11px] tracking-[.18em] text-white/30">

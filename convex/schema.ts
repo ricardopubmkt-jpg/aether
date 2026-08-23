@@ -10,6 +10,20 @@ const tone = v.union(
   v.literal("fragmented")
 );
 
+const climate = v.object({
+  intensity: v.number(),
+  dominantTone: tone,
+  density: v.number(),
+  novelty: v.number(),
+  flow: v.number()
+});
+
+const physiology = v.object({
+  bornAt: v.number(),
+  breathSequence: v.number(),
+  lastBreathAt: v.number()
+});
+
 export default defineSchema({
   presence: defineTable({
     sessionId: v.string(),
@@ -47,13 +61,8 @@ export default defineSchema({
     singleton: v.literal("aether"),
     eraName: v.string(),
     currentNarrative: v.string(),
-    emotionalClimate: v.object({
-      intensity: v.number(),
-      dominantTone: tone,
-      density: v.number(),
-      novelty: v.number(),
-      flow: v.number()
-    }),
+    emotionalClimate: climate,
+    physiology: v.optional(physiology),
     version: v.number(),
     updatedAt: v.number()
   }).index("by_singleton", ["singleton"]),
@@ -62,13 +71,7 @@ export default defineSchema({
     worldVersion: v.number(),
     eraName: v.string(),
     narrative: v.string(),
-    emotionalClimate: v.object({
-      intensity: v.number(),
-      dominantTone: tone,
-      density: v.number(),
-      novelty: v.number(),
-      flow: v.number()
-    }),
+    emotionalClimate: climate,
     trigger: v.string(),
     createdAt: v.number()
   }).index("by_version", ["worldVersion"]),

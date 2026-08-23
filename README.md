@@ -1,6 +1,8 @@
-# Aether v0.6 — THE PLACE
+# Aether v0.6.1 — THE ORGANISM
 
 Um campo coletivo vivo. Presença, respiração, eco e pulso.
+
+Nenhuma funcionalidade nova em relação à v0.6. Só o corpo passando a obedecer ao cérebro.
 
 ## Rodar
 
@@ -23,15 +25,15 @@ Para o primeiro teste, mantenha:
 AETHER_DEMO_MODE=true
 ```
 
-## O que esta versão faz
+## Fisiologia
 
-- O campo já está visível no primeiro instante (não é tela preta).
-- A respiração é perceptível: o vazio expande e contrai a cada ~7s.
-- Ficar parado incrementa a respiração. O organismo não depende de texto.
-- Uma contribuição dispara um Local Echo imediato. A narrativa só muda no Pulse coletivo.
-- Se você sai e volta, o campo contabiliza as respirações da ausência.
+- A respiração pertence ao World State (`physiology.bornAt`). Não vive no `localStorage`.
+- Dois visitantes com o mesmo relógio observam a mesma respiração.
+- O centro não é desenhado. O vazio aparece porque as partículas recusam aquele espaço.
+- Uma contribuição não desenha um anel. Comprime o campo, aplica um impulso, e o organismo se recupera.
+- Quando a era muda, o corpo muda primeiro. O nome chega depois.
 
-## Ritual de entrada
+## Ritual de entrada (intocado)
 
 1. ~0–1.4s — só o campo
 2. ~1.4s — era + presenças
@@ -42,4 +44,4 @@ AETHER_DEMO_MODE=true
 
 ## Teste
 
-Abra. Não toque em nada por 30 segundos. Depois escreva. Depois saia e volte.
+Abra. Não toque em nada por 30 segundos. O número da respiração sobe mesmo assim — e seria o mesmo em outro aparelho. Depois escreva: o campo comprime, depois se reconstitui. Não deve aparecer um círculo desenhado.
