@@ -1,29 +1,25 @@
 # Aether — Product Notes
 
+## v0.7 — THRESHOLD
+
+The field is no longer a page you visit. It is a threshold you cross.
+
+1. **Approach** — typing tightens the field before submit. Intention is physical.
+2. **Dissolution** — contribution becomes luminous motes that fall into the void and are absorbed.
+3. **Strata** — after silence, residual memory surfaces as pressure, not a feed.
+4. **Return ceremony** — absence is counted in breaths the organism took without you.
+5. **Sub-audible breath** — on interaction, a nearly inaudible tone marks the pulse.
+
+Standalone: `place/index.html` — open it, no install.
+
 ## v0.6.1 — the organism
 
-The brain already worked. This version makes the body obey it.
-
-- **Breath** belongs to World State (`physiology.bornAt` → `breathSequence`). Not to the browser.
-- **Void** is not drawn. Particles refuse the center. Absence is a consequence.
-- **Echo** is pressure, velocity, radial impulse, turbulence — then recovery. No stroked ring.
-- **Era** changes the body first (flow, space, intensity, chroma). The label arrives later.
-- **Distribution**: dense near the void, sparse at the periphery. The empty center becomes visible by pressure, not by outline.
-
-Sitting still is still the proof.
+- **Breath** belongs to World State. Not to the browser.
+- **Void** is not drawn. Particles refuse the center.
+- **Echo** is pressure, then recovery. No stroked ring.
+- **Era** changes the body first. The label arrives later.
 
 ## v0.6 — the field crosses the door
 
-The body has to notice life without searching.
-
-- Arrival ritual: field → era → narrative → invite.
-- Local Echo is immediate; narrative waits for Pulse.
-- Absence continues the field.
-
-## Arrival
-
-Field first. Chrome later. The dark is a place, not a loader.
-
-## Absence
-
-Breath continues while the visitor is gone. On return: “Durante a ausência, o campo permaneceu em movimento.”
+Arrival ritual: field → era → narrative → invite.
+Absence continues the field.
